@@ -42,7 +42,7 @@ class FilmExtract(BaseExtract):
         geners = geners_part.find("span", class_="value right rt-fff").find_all("a")
         for gener in geners:
             geners_list.append(gener.text)
-        return geners_list
+        return "-".join(geners_list)
 
     def extract_year_realese(self, soup: BeautifulSoup) -> int:
         year_realese_part = soup.find("ul", class_="info left rt-13 rt-relative rt-ddd").find_all("li", class_="rt")[1]
