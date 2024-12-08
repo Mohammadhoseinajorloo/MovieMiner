@@ -28,14 +28,7 @@ class DataBaseHandler:
 
 
 def main():
-    columns_name = ["id", "firstname", "lastname"]
-    columns_data_type = ["INTEGER", "VARCHAR", "VARCHAR"]
-    columns = {key:value for (key,value) in zip(columns_name, columns_data_type)}
-    tabel_name = "films"
-    db = DataBaseHandler(DATABASE_ADDRESS)
-    db.create_table(tabel_name, columns)
-    """
-    page = 0
+    page = 1 
     while True:
         url = FILM_URL+"page/"+str(page)+"/" 
         moviextraction = FilmExtract(url)
@@ -45,10 +38,10 @@ def main():
         print(f"Scrape page number {page}")
         for index, movie in enumerate(movies):
             print(f"Movie number {index}")
+            print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
             print(movie)
         print("_______________________________________________________________")
         page += 1
-    """
 
 if __name__ == "__main__":
     main()
