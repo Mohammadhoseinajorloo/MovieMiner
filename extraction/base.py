@@ -40,7 +40,10 @@ class BaseExtract:
         shamsi_day = shamsi_date.day
         for article in articels:
             update_time = self.extract_update_time(article)
-            if shamsi_day == update_time.day:
+            update_time_year = update_time.year
+            update_time_month = update_time.month
+            update_time_day = update_time.day
+            if shamsi_day == update_time_day:
                 page_link = self.extracte_page_link(article)
                 title = self.extracte_title(article)
                 image = self.extracte_image(article) 
@@ -72,35 +75,14 @@ class BaseExtract:
                         language=language,
                         director=director,
                         stars=stars,
-                        update_time=update_time,
+                        update_time_year=update_time_year,
+                        update_time_month=update_time_month,
+                        update_time_day = update_time_day,
                         discription=discription,
                         like=like,
                         dislike=dislike
                         )
-                columns_name = article_obj.get_filds()
-                columns_type = [
-                        "VARCHAR(255)",
-                        "VARCHAR(64)",
-                        "VARCHAR(255)",
-                        "FLOAT",
-                        "FLOAT",
-                        "FLOAT",
-                        "FLOAT",
-                        "VARCHAR(255)",
-                        "INTIGER",
-                        "INTEGER",
-                        "VARCHAR(64)",
-                        "VARCHAR(64)",
-                        "VARCHAR(64)",
-                        "VARCHAR(64)",
-                        "VARCHAR(255)",
-                        "DATE",
-                        "LONGETEXT",
-                        "INTEGER",
-                        "INTEGER",
-                        ]
-                columns = {key:value for (key,value) in zip(columns_name, columns_type)}        
-                db.create_table("films", columns)
+
                 articles_list.append(article_obj) 
             else:
                 continue
