@@ -87,9 +87,14 @@ class FilmExtract(BaseExtract):
         return stars 
 
     def extract_update_time(self, soup: BeautifulSoup) -> UpdateTime:
-        update_time_part = soup.find("ul", class_="info left rt-13 rt-relative rt-ddd").find_all("li", class_="rt")[8]
-        update_time = update_time_part.find("span", class_="value right rt-fff").text
-        return UpdateTime(update_time)
+        try:
+            update_time_part = soup.find("ul", class_="info left rt-13 rt-relative rt-ddd").find_all("li", class_="rt")[8]
+            update_time = update_time_part.find("span", class_="value right rt-fff").text
+            return UpdateTime(update_time)
+        except:
+            update_time_part = soup.find("ul", class_="info left rt-13 rt-relative rt-ddd").find_all("li", class_="rt")[7]
+            update_time = update_time_part.find("span", class_="value right rt-fff").text
+            return UpdateTime(update_time)
 
     def extract_discription(self, soup: BeautifulSoup) -> str:
         return soup.find("div", class_="text rt rt-ddd rt-13 rt-10px").find("p").text
