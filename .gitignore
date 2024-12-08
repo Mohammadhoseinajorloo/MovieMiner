@@ -1,3 +1,4 @@
 .vnev/
 __pycache__/
 movies.db
+.env

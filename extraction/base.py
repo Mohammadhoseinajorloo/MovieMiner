@@ -4,6 +4,8 @@ WORK_DIR = os.getcwd()
 sys.path.append(WORK_DIR)
 
 from article import Article
+from db.base import DataBaseHandler
+from core.config import setting
 
 from bs4 import BeautifulSoup
 import requests
