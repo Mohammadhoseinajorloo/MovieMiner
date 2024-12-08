@@ -37,7 +37,7 @@ def main():
             break
         print(f"Scrape page number {page}")
         for index, movie in enumerate(movies):
-            print(f"Movie number {index}")
+            print(f"Movie number {index+1}")
             print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
             print(movie)
         print("_______________________________________________________________")
