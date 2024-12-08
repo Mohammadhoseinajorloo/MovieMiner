@@ -54,27 +54,26 @@ class BaseExtract:
                 like = self.extract_like(article)
                 dislike = self.extract_dislike(article)
                 article_obj = Article(
-                        page_link,
-                        title,
-                        image,
-                        imdb_rate,
-                        vote_rate,
-                        user_satisfaction_rate,
-                        metacritic_rate,
-                        geners,
-                        year_realese,
-                        movie_time,
-                        quality,
-                        product,
-                        language,
-                        director,
-                        stars,
-                        update_time,
-                        discription,
-                        like,
-                        dislike
+                        page_link=page_link,
+                        title=title,
+                        image=image,
+                        imdb_rate=imdb_rate,
+                        vote_rate=vote_rate,
+                        user_satisfaction_rate=user_satisfaction_rate,
+                        metacritic_rate=metacritic_rate,
+                        geners=geners,
+                        year_realese=year_realese,
+                        movie_time=movie_time,
+                        quality=quality,
+                        product=product,
+                        language=language,
+                        director=director,
+                        stars=stars,
+                        update_time=update_time,
+                        discription=discription,
+                        like=like,
+                        dislike=dislike
                         )
-
                 articles_list.append(article_obj)
             else:
                 continue
