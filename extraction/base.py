@@ -74,6 +74,7 @@ class BaseExtract:
                         like,
                         dislike
                         )
+
                 articles_list.append(article_obj)
             else:
                 continue
