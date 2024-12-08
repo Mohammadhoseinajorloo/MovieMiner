@@ -34,6 +34,7 @@ class BaseExtract:
 
     def extract_info_articel(self, articels: list):
         articles_list = []
+        db = DataBaseHandler(setting.DATABASE_ADDRESS)
         today = datetime.datetime.now()
         shamsi_date = shamsi_date = jdatetime.date.fromgregorian(date=today)
         shamsi_day = shamsi_date.day
@@ -76,7 +77,31 @@ class BaseExtract:
                         like=like,
                         dislike=dislike
                         )
-                articles_list.append(article_obj)
+                columns_name = article_obj.get_filds()
+                columns_type = [
+                        "VARCHAR(255)",
+                        "VARCHAR(64)",
+                        "VARCHAR(255)",
+                        "FLOAT",
+                        "FLOAT",
+                        "FLOAT",
+                        "FLOAT",
+                        "VARCHAR(255)",
+                        "INTIGER",
+                        "INTEGER",
+                        "VARCHAR(64)",
+                        "VARCHAR(64)",
+                        "VARCHAR(64)",
+                        "VARCHAR(64)",
+                        "VARCHAR(255)",
+                        "DATE",
+                        "LONGETEXT",
+                        "INTEGER",
+                        "INTEGER",
+                        ]
+                columns = {key:value for (key,value) in zip(columns_name, columns_type)}        
+                db.create_table("films", columns)
+                articles_list.append(article_obj) 
             else:
                 continue
 
