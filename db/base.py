@@ -8,6 +8,7 @@ class DataBaseHandler:
             self.connection = sqlite3.connect(db_address)
             self.cursor = self.connection.cursor()
             print(f"SQLITE Connection Established!!!")
+
         except sqlite3.Error as error:
             print(f"Error while connection to sqlite", error)
 
