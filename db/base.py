@@ -20,7 +20,7 @@ class DataBaseHandler:
     def create_table(self, tabel_name: str, article: Article):
         fields = article.get_filds()
         placeholders = ", ".join(f"{field} TEXT" for field in fields)  
-        create_table_query = f"CREATE TABLE IF NOT EXISTS {tabel_name} ({placeholders})"
+        create_table_query = f"CREATE TABLE IF NOT EXISTS {tabel_name} (id INTEGER PRIMARY KEY AUTOINCREMENT,{placeholders})"
         self.cursor.execute(create_table_query)
 
     def insert(self, tabel_name: str, article: Article):
