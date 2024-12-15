@@ -8,12 +8,8 @@ class UpdateTime:
             "مرداد": 4,
             "تیر": 5,
             "شهریور": 6,
-            "مهر": 7,
-            "آبان": 8,
             "آذر": 9,
-            "دی": 10,
             "بهمن": 11,
-            "اسفند": 12,
             }
         date_list = self.covert_date(string)
         self.day = int(self.convert_farsi_to_english_numbers(date_list[0])) 
