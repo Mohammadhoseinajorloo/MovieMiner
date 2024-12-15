@@ -4,6 +4,8 @@ WORK_DIR = os.getcwd()
 sys.path.append(WORK_DIR)
 
 from article import Article
+from db.base import DataBaseHandler
+from core.config import setting
 
 from bs4 import BeautifulSoup
 import requests
@@ -32,12 +34,16 @@ class BaseExtract:
 
     def extract_info_articel(self, articels: list):
         articles_list = []
+        db = DataBaseHandler(setting.DATABASE_ADDRESS)
         today = datetime.datetime.now()
         shamsi_date = shamsi_date = jdatetime.date.fromgregorian(date=today)
         shamsi_day = shamsi_date.day
         for article in articels:
             update_time = self.extract_update_time(article)
-            if shamsi_day == update_time.day:
+            update_time_year = update_time.year
+            update_time_month = update_time.month
+            update_time_day = update_time.day
+            if shamsi_day == update_time_day:
                 page_link = self.extracte_page_link(article)
                 title = self.extracte_title(article)
                 image = self.extracte_image(article) 
@@ -54,27 +60,30 @@ class BaseExtract:
                 like = self.extract_like(article)
                 dislike = self.extract_dislike(article)
                 article_obj = Article(
-                        page_link,
-                        title,
-                        image,
-                        imdb_rate,
-                        vote_rate,
-                        user_satisfaction_rate,
-                        metacritic_rate,
-                        geners,
-                        year_realese,
-                        movie_time,
-                        quality,
-                        product,
-                        language,
-                        director,
-                        stars,
-                        update_time,
-                        discription,
-                        like,
-                        dislike
+                        page_link=page_link,
+                        title=title,
+                        image=image,
+                        imdb_rate=imdb_rate,
+                        vote_rate=vote_rate,
+                        user_satisfaction_rate=user_satisfaction_rate,
+                        metacritic_rate=metacritic_rate,
+                        geners=geners,
+                        year_realese=year_realese,
+                        movie_time=movie_time,
+                        quality=quality,
+                        product=product,
+                        language=language,
+                        director=director,
+                        stars=stars,
+                        update_time_year=update_time_year,
+                        update_time_month=update_time_month,
+                        update_time_day = update_time_day,
+                        discription=discription,
+                        like=like,
+                        dislike=dislike
                         )
-                articles_list.append(article_obj)
+
+                articles_list.append(article_obj) 
             else:
                 continue
 
