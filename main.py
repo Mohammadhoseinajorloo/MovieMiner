@@ -10,7 +10,7 @@ def main():
     page = 1
     db = DataBaseHandler(setting.DATABASE_ADDRESS)
     while True:
-        url = setting.FILM_URL+"page/"+str(page)+"/"
+        url = f"{setting.FILM_URL}page/{str(page)}/"
         moviextraction = FilmExtract(url)
         movies = moviextraction.scrape()
         if len(movies) == 0:
