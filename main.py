@@ -7,7 +7,7 @@ import sqlite3
 
 
 def main():
-    page = 1 
+    page = 1
     db = DataBaseHandler(setting.DATABASE_ADDRESS)
     while True:
         url = setting.FILM_URL+"page/"+str(page)+"/" 
