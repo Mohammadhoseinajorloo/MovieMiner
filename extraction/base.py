@@ -34,7 +34,6 @@ class BaseExtract:
 
     def extract_info_articel(self, articels: list):
         articles_list = []
-        db = DataBaseHandler(setting.DATABASE_ADDRESS)
         today = datetime.datetime.now()
         shamsi_date = shamsi_date = jdatetime.date.fromgregorian(date=today)
         shamsi_day = shamsi_date.day
