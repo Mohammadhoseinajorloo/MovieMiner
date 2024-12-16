@@ -10,7 +10,7 @@ def main():
     page = 1
     db = DataBaseHandler(setting.DATABASE_ADDRESS)
     while True:
-        url = setting.FILM_URL+"page/"+str(page)+"/" 
+        url = setting.FILM_URL+"page/"+str(page)+"/"
         moviextraction = FilmExtract(url)
         movies = moviextraction.scrape()
         if len(movies) == 0:
@@ -19,10 +19,10 @@ def main():
         for index, movie in enumerate(movies):
             db.create_table("films", movie)
             db.insert("films", movie)
-#            print(f"Movie number {index+1}")
-#            print(movie)
-#            print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
-#        print("_______________________________________________________________")
+            print(f"Movie number {index+1}")
+            print(movie)
+            print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+        print("_______________________________________________________________")
         page += 1
 
 if __name__ == "__main__":
