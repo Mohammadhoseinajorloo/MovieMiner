@@ -1,6 +1,6 @@
 from extraction.film import FilmExtract
 from core.config import setting
-from db.base import DataBaseHandler
+from db.database_manager import DatabaseManager 
 
 import jdatetime
 import sqlite3
@@ -8,7 +8,7 @@ import sqlite3
 
 def main():
     page = 1
-    db = DataBaseHandler(setting.DATABASE_ADDRESS)
+    db = DatabaseManager(setting.DATABASE_ADDRESS)
     while True:
         url = f"{setting.FILM_URL}page/{str(page)}/"
         moviextraction = FilmExtract(url)
