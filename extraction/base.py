@@ -42,11 +42,13 @@ class BaseExtract:
             update_time_year = update_time.year
             update_time_month = update_time.month
             update_time_day = update_time.day
-            if shamsi_day == update_time_day:
+            imdb_rate, vote_rate, user_satisfaction_rate, metacritic_rate = self.extracte_rates(article)
+
+            # condition imdb rate and update_time for limit films
+            if (shamsi_day == update_time_day) and (imdb_rate > 7):
                 page_link = self.extracte_page_link(article)
                 title = self.extracte_title(article)
                 image = self.extracte_image(article) 
-                imdb_rate, vote_rate, user_satisfaction_rate, metacritic_rate = self.extracte_rates(article)
                 geners = self.extract_geners(article)
                 year_realese = self.extract_year_realese(article)
                 movie_time = self.extract_movie_time(article)
