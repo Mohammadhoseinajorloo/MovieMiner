@@ -84,7 +84,7 @@ class FilmExtract(BaseExtract):
     def extract_stars(self, soup: BeautifulSoup) -> str:
         stars_part = soup.find("ul", class_="info left rt-13 rt-relative rt-ddd").find_all("li", class_="rt")[7]
         stars = stars_part.find("span", class_="value right rt-fff").text
-        return stars 
+        return stars
 
     def extract_update_time(self, soup: BeautifulSoup) -> UpdateTime:
         try:
