@@ -3,7 +3,7 @@ from article import Article
 import sqlite3
 
 
-class DataBaseHandler:
+class DatabaseManager:
 
     def __init__(self, db_address: str):
         try:
