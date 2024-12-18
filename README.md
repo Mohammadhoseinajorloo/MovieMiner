@@ -6,4 +6,5 @@
 
 
 ## TODO
-[ ] add watch and watchn't movies in database for analisis movies data for recommender to user
+[ ] add watch and watchn't movies in database for analisis movies data for recommender to user.
+[ ] add limit for imdb rate in extracted.
