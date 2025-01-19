@@ -1,4 +1,4 @@
-.vnev/
+.venv/
 __pycache__/
-movies.db
+downloader.db
 .env
