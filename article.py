@@ -8,9 +8,3 @@ class Article:
 
     def get_values(self):
         return list(self.filds.values())
-
-    def __str__(self):
-        string = ""
-        for key, values in self.filds.items():
-            string += f"{key}:'{values}'\n"
-        return string

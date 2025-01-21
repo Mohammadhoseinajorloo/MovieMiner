@@ -2,3 +2,4 @@
 __pycache__/
 downloader.db
 .env
+*.log
