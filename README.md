@@ -18,3 +18,7 @@ DATABASE_ADDRESS = "sqlite:///./db_name.db"
 ## TODO
 - [ ] add watch and watchn't movies in database for analisis movies data for recommender to user.
 - [X] add limit for imdb rate in extracted.
+- [ ] add logger
+ - [X] add logger in main file
+ - [ ] add logger in db
+ - [ ] add logger in extraction data
