@@ -22,3 +22,4 @@ DATABASE_ADDRESS = "sqlite:///./db_name.db"
  - [X] add logger in main file
  - [ ] add logger in db
  - [ ] add logger in extraction data
+- [ ] add scheduler for app
