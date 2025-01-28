@@ -1,8 +1,13 @@
 from extraction.film import FilmExtract
 from core.config import setting
 from db.database_manager import DatabaseManager 
+from apscheduler.schedulers.blocking import BlockingScheduler
 from logger import logger
 import sqlite3
+
+
+HOUR_SCHEDUL = 22
+MINUTE_SCHEDUL = 32 
 
 
 # Function for scraping website
@@ -52,5 +57,19 @@ def main():
         page += 1
 
 
+# Starting scheduler for run all app
+def start_scheduler(
+        h_schedule: int,
+        m_schedule: int
+):
+    scheduler = BlockingScheduler()
+    scheduler.add_job(main, "cron", hour=h_schedule, minute=m_schedule)
+    try:
+        logger.info("Starting scheduler ....")
+        scheduler.start()
+    except (keyboardInterrrupt, SystemExit):
+        logger.error("End ...")
+
+
 if __name__ == "__main__":
-    main()
+    start_scheduler(HOUR_SCHEDUL, MINUTE_SCHEDUL)

@@ -2,7 +2,7 @@
 
 ## Features
 - Extracted information each movie from [golchindls](https://golchindls.ir/) website.
-- Storage data and information for each movie in the database(in sqlite for test but mysql in final product).
+- Storage data and information for each movie in the database (in sqlite for test but mysql in final product).
 
 ## use `.env` 
 - rename `.env.sample` file to `.env`:
@@ -19,7 +19,7 @@ DATABASE_ADDRESS = "sqlite:///./db_name.db"
 - [ ] add watch and watchn't movies in database for analisis movies data for recommender to user.
 - [X] add limit for imdb rate in extracted.
 - [ ] add logger
- - [X] add logger in main file
- - [ ] add logger in db
- - [ ] add logger in extraction data
-- [ ] add scheduler for app
+  - [X] add logger in main file
+  - [ ] add logger in db
+  - [ ] add logger in extraction data
+- [X] add scheduler for app
