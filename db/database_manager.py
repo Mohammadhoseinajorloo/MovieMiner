@@ -1,4 +1,9 @@
+import sys
+import os
+WORK_DIR = os.getcwd()
+sys.path.append(WORK_DIR)
 from article import Article
+from logger import logger
 
 import sqlite3
 
@@ -9,10 +14,10 @@ class DatabaseManager:
         try:
             self.connection = sqlite3.connect(db_address)
             self.cursor = self.connection.cursor()
-            print(f"SQLITE Connection Established!!!")
+            logger.info(f"SQLITE Connection Established!!!")
 
         except sqlite3.Error as error:
-            print(f"Error while connection to sqlite", error)
+            logger.error(f"Error while connection to sqlite : {error}")
 
     def __exit__(self):
         return self.cursor.close()

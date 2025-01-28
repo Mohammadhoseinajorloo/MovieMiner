@@ -6,8 +6,8 @@ from logger import logger
 import sqlite3
 
 
-HOUR_SCHEDUL = 22
-MINUTE_SCHEDUL = 32 
+HOUR_SCHEDUL = 23
+MINUTE_SCHEDUL = 54
 
 
 # Function for scraping website
