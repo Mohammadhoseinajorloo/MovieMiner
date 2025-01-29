@@ -7,16 +7,16 @@
 
 ## vertual envaierment
 1. **Create a vertual envaierment with `venv`**
-```
+```bash
 # This .venv name example
 python -m venv .venv
 ```
 2. **Activate `.venv`**
-```
+```bash
 source .venv/bin/activate
 ```
 3. **Install all dependences with requairement file**
-```
+```bash
 pip install -r requairement.txt
 ```
 
@@ -32,8 +32,8 @@ DATABASE_ADDRESS = "sqlite:///./db_name.db"
 ```
 
 ## Log Files
-- All log file this blowe address storage
-**log files address** : `logger/logs/*` 
+- All log file this blowe address storage  
+**log files address** : `logger/logs/*`
 
 
 ## TODO
