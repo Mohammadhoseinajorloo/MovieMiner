@@ -6,7 +6,6 @@ import jdatetime
 import sqlite3
 from logger import (
     logger,
-    loggerboxing,
 )
 
 
@@ -48,7 +47,6 @@ def Storage_info_in_db(
 
 
 def main():
-    loggerboxing.info(f"================= {jdatetime.date.today()} ==================")
     page = 1
     while True:
         # scrap website
@@ -56,7 +54,6 @@ def main():
         # if empty movies list break app
         if not movies:
             logger.warning(f"There is no movie for today")
-            loggerboxing.info("========================================================")
             break
         # strorge moive information in database
         Storage_info_in_db(movies)

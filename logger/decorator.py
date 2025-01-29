@@ -3,14 +3,12 @@ from time import time
 import hashlib
 from .timeroutinglogger import (
     logger,
-    loggerboxing,
 )
 
 
 def log_execution(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        loggerboxing.info(f"***************** {func.__name__} *********************")
         logger.info(f"Executing function: {func.__name__}")
         logger.info(f"Arguments: args={args}, kwargs={kwargs}")
         start_time = time()

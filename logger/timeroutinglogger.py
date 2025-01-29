@@ -45,4 +45,3 @@ def create_logger(
 
 
 logger = create_logger(LOGGER_NAME, LOGGING_FORMAT)
-loggerboxing = create_logger("LoggerBoxing")
