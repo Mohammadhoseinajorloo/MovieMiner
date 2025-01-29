@@ -3,3 +3,4 @@ __pycache__/
 downloader.db
 .env
 *.log
+get-docker.sh

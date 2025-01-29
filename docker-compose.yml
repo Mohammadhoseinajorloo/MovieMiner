@@ -1,0 +1,26 @@
+version: '0.1'
+services:
+  scraper:
+    build: .
+    container_name: downloader
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=mysql://mohammad:30676@db:3306/downloader
+
+  db:
+    image: mysql:latest
+    container_name: db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 30676
+      MYSQL_USER: mohammad
+      MYSQL_PASSWORD: 30676
+      MYSQL_DATABASE: downloader
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
