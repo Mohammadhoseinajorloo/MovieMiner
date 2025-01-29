@@ -9,8 +9,10 @@ from logger import (
 )
 
 
-HOUR_SCHEDUL = 23
-MINUTE_SCHEDUL = 55
+#HOUR_SCHEDUL = 23
+#MINUTE_SCHEDUL = 55
+HOUR_SCHEDUL = 21
+MINUTE_SCHEDUL = 28
 
 
 # Function for scraping website
@@ -34,7 +36,7 @@ def scraping_website(
 # Function for storaging information in database
 def Storage_info_in_db(
     movies: list,
-    db: DatabaseManager = DatabaseManager(setting.DATABASE_ADDRESS),
+    db: DatabaseManager = DatabaseManager(),
 ):
     for movie in movies:
         try:

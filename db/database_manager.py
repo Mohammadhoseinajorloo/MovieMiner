@@ -4,20 +4,40 @@ WORK_DIR = os.getcwd()
 sys.path.append(WORK_DIR)
 from article import Article
 from logger import logger
+from core.config import setting
 
-import sqlite3
+#import sqlite3
+import mysql.connector
 
 
 class DatabaseManager:
 
-    def __init__(self, db_address: str):
+    def __init__(
+            self
+    ):
         try:
-            self.connection = sqlite3.connect(db_address)
+            db_url = setting.DATABASE_ADDRESS
+            db_info = db_url.split('://')[1].split('@')
+            user_pass = db_info[0].split(':')
+            user = user_pass[0]
+            password = user_pass[1]
+            host_port = db_info[1].split('/')
+            host = host_port[0].split(':')[0]
+            port = host_port[0].split(':')[1]
+            database = host_port[1]
+            #self.connection = sqlite3.connect(db_address)
+            self.connection = mysql.connector.connect(
+                user=user,
+                password=password,
+                host=host,
+                port=int(port),
+                database=database
+            )
             self.cursor = self.connection.cursor()
-            logger.info(f"SQLITE Connection Established!!!")
+            logger.info(f"MySQL Connection Established!!!")
 
-        except sqlite3.Error as error:
-            logger.error(f"Error while connection to sqlite : {error}")
+        except mysql.connector.Error as error:
+            logger.error(f"Error while connection to mysql: {error}")
 
     def __exit__(self):
         return self.cursor.close()
