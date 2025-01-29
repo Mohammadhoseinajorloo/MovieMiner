@@ -16,7 +16,7 @@ class UpdateTime:
             "اسفند": 12,
         }
         date_list = self.covert_date(string)
-        self.day = int(self.convert_farsi_to_english_numbers(date_list[0])) 
+        self.day = int(self.convert_farsi_to_english_numbers(date_list[0]))
         self.month = int(self.month[date_list[1]])
         self.year = int(self.convert_farsi_to_english_numbers(date_list[2]))
 

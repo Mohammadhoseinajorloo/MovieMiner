@@ -5,6 +5,7 @@ sys.path.append(WORK_DIR)
 
 from article import Article
 from core.config import setting
+from logger.decorator import log_execution
 
 from bs4 import BeautifulSoup
 import requests
@@ -13,17 +14,21 @@ import jdatetime
 
 
 class BaseExtract:
+    @log_execution
     def __init__(self, url):
         self.url = url
 
+    @log_execution
     def parse_url (self, url: str) -> str:
         res = requests.get(url)
         return res.text
 
+    @log_execution
     def fetch_url(self, html: str) -> BeautifulSoup:
         soup = BeautifulSoup(html, "html.parser")
         return soup
 
+    @log_execution
     def extract_articles(self, soup: BeautifulSoup) -> list:
         articels_post_box = soup.find("div", class_="rt-posts right is-archive list-mode")
         section_rt = articels_post_box.find("section", class_="rt") 
@@ -31,6 +36,7 @@ class BaseExtract:
         articels = div_rt.find_all("article")
         return articels
 
+    @log_execution
     def extract_info_articel(self, articels: list):
         articles_list = []
         today = datetime.datetime.now()
@@ -89,6 +95,7 @@ class BaseExtract:
 
         return articles_list
 
+    @log_execution
     def scrape(self):
         html = self.parse_url (self.url)
         soup = self.fetch_url(html)

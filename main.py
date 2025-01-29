@@ -1,13 +1,17 @@
 from extraction.film import FilmExtract
 from core.config import setting
-from db.database_manager import DatabaseManager 
+from db.database_manager import DatabaseManager
 from apscheduler.schedulers.blocking import BlockingScheduler
-from logger import logger
+import jdatetime
 import sqlite3
+from logger import (
+    logger,
+    loggerboxing,
+)
 
 
-HOUR_SCHEDUL = 23
-MINUTE_SCHEDUL = 54
+#HOUR_SCHEDUL = 23
+#MINUTE_SCHEDUL = 55
 
 
 # Function for scraping website
@@ -44,6 +48,7 @@ def Storage_info_in_db(
 
 
 def main():
+    loggerboxing.info(f"================= {jdatetime.date.today()} ==================")
     page = 1
     while True:
         # scrap website
@@ -51,6 +56,7 @@ def main():
         # if empty movies list break app
         if not movies:
             logger.warning(f"There is no movie for today")
+            loggerboxing.info("========================================================")
             break
         # strorge moive information in database
         Storage_info_in_db(movies)
@@ -72,4 +78,5 @@ def start_scheduler(
 
 
 if __name__ == "__main__":
-    start_scheduler(HOUR_SCHEDUL, MINUTE_SCHEDUL)
+    #start_scheduler(HOUR_SCHEDUL, MINUTE_SCHEDUL)
+    main()

@@ -5,6 +5,7 @@ from logging import (
     StreamHandler,
     Formatter,
     getLogger,
+    Filter,
 )
 from .config import (
     LOGGER_NAME,
@@ -12,19 +13,36 @@ from .config import (
     LOGGING_TIME_FORMAT,
     LOG_FILE,
 )
+import re
 
 
-logger = getLogger(LOGGER_NAME)
-logger.setLevel(INFO)
-formatter = Formatter(LOGGING_FORMAT, LOGGING_TIME_FORMAT)
+class NoHTMLFilter(Filter):
+    def filter (self, record):
+        return not bool(re.search(r"<[a-z][\s\S]*>", record.getMessage()))
 
-file_handler = TimedRotatingFileHandler(
-    LOG_FILE,
-    when="midnight",
-    interval=30,
-    backupCount=12,
-)
-file_handler.setLevel(DEBUG)
-file_handler.setFormatter(formatter)
 
-logger.addHandler(file_handler)
+def create_logger(
+        name,
+        logger_format = None,
+):
+    logger = getLogger(name)
+    logger.setLevel(INFO)
+    formatter = Formatter(logger_format, LOGGING_TIME_FORMAT)
+
+    file_handler = TimedRotatingFileHandler(
+        LOG_FILE,
+        when="midnight",
+        interval=30,
+        backupCount=12,
+    )
+    file_handler.setLevel(DEBUG)
+    file_handler.setFormatter(formatter)
+
+    logger.addFilter(NoHTMLFilter())
+    logger.propgate = False
+    logger.addHandler(file_handler)
+    return logger
+
+
+logger = create_logger(LOGGER_NAME, LOGGING_FORMAT)
+loggerboxing = create_logger("LoggerBoxing")
