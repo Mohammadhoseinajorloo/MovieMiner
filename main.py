@@ -11,6 +11,8 @@ from logger import (
 
 #HOUR_SCHEDUL = 23
 #MINUTE_SCHEDUL = 55
+HOUR_SCHEDUL = 17
+MINUTE_SCHEDUL = 33
 
 
 # Function for scraping website
@@ -70,10 +72,9 @@ def start_scheduler(
     try:
         logger.info("Starting scheduler ....")
         scheduler.start()
-    except (keyboardInterrrupt, SystemExit):
+    except (KeyboardInterrupt, SystemExit):
         logger.error("End ...")
 
 
 if __name__ == "__main__":
-    #start_scheduler(HOUR_SCHEDUL, MINUTE_SCHEDUL)
-    main()
+    start_scheduler(HOUR_SCHEDUL, MINUTE_SCHEDUL)
