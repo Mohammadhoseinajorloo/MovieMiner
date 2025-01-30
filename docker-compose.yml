@@ -4,23 +4,29 @@ services:
     build: .
     container_name: downloader
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       - DATABASE_URL=mysql://mohammad:30676@db:3306/downloader
 
   db:
-    image: mysql:latest
+    image: mysql:5.7
     container_name: db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 30676
+      MYSQL_ROOT_PASSWORD: "30676"
       MYSQL_USER: mohammad
-      MYSQL_PASSWORD: 30676
+      MYSQL_PASSWORD: "30676"
       MYSQL_DATABASE: downloader
     ports:
       - "3306:3306"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - ./mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
 
 volumes:
   mysql_data:

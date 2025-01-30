@@ -9,10 +9,6 @@ from logger import (
 )
 
 
-HOUR_SCHEDUL = 23
-MINUTE_SCHEDUL = 55
-
-
 # Function for scraping website
 def scraping_website(
         page: int
@@ -34,7 +30,9 @@ def scraping_website(
 # Function for storaging information in database
 def Storage_info_in_db(
     movies: list,
-    db: DatabaseManager = DatabaseManager(),
+    db: DatabaseManager = DatabaseManager(
+        status=setting.STATUS_PROJECT
+    ),
 ):
     for movie in movies:
         try:
@@ -44,20 +42,6 @@ def Storage_info_in_db(
         except Exception as e :
             logger.error(f"Database error on  movie {movie.filds['title']} : {e}")
             continue
-
-
-def main():
-    page = 1
-    while True:
-        # scrap website
-        movies = scraping_website(page)
-        # if empty movies list break app
-        if not movies:
-            logger.warning(f"There is no movie for today")
-            break
-        # strorge moive information in database
-        Storage_info_in_db(movies)
-        page += 1
 
 
 # Starting scheduler for run all app
@@ -74,5 +58,27 @@ def start_scheduler(
         logger.error("End ...")
 
 
+def main(schedule: bool=False):
+    # This condition for test in docker
+    if schedule:
+        print('With schedule')
+        start_scheduler(int(setting.HOUR_SCHEDUL), int(setting.MINUTE_SCHEDUL))
+
+    else:
+        print("Without schedule")
+        page = 1
+        while True:
+            # scrap website
+            movies = scraping_website(page)
+            # if empty movies list break app
+            if not movies:
+                logger.warning(f"There is no movie for today")
+                break
+            # strorge moive information in database
+            Storage_info_in_db(movies)
+            page += 1
+
+
 if __name__ == "__main__":
-    start_scheduler(HOUR_SCHEDUL, MINUTE_SCHEDUL)
+    main(schedule=True) # with schedule
+    #main() # without schedule
