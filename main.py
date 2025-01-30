@@ -9,10 +9,8 @@ from logger import (
 )
 
 
-#HOUR_SCHEDUL = 23
-#MINUTE_SCHEDUL = 55
-HOUR_SCHEDUL = 21
-MINUTE_SCHEDUL = 28
+HOUR_SCHEDUL = 23
+MINUTE_SCHEDUL = 55
 
 
 # Function for scraping website
