@@ -50,7 +50,7 @@ class BaseExtract:
             imdb_rate, vote_rate, user_satisfaction_rate, metacritic_rate = self.extracte_rates(article)
 
             # condition imdb rate and update_time for limit films
-            if (shamsi_day == update_time_day) and (imdb_rate > 7):
+            if (shamsi_day == update_time_day) and (imdb_rate >= 7):
                 page_link = self.extracte_page_link(article)
                 title = self.extracte_title(article)
                 image = self.extracte_image(article) 
