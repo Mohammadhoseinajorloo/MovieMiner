@@ -80,5 +80,7 @@ def main(schedule: bool=False):
 
 
 if __name__ == "__main__":
-    main(schedule=True) # with schedule
-    #main() # without schedule
+    if setting.STATUS_PROJECT == "product":
+        main(schedule=True) # with schedule
+    elif setting.STATUS_PROJECT == "test":
+        main() # without schedule
