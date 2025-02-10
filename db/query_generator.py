@@ -28,6 +28,6 @@ class QueryGenerator:
         if isinstance(connection, sqlite3.Connection):
             value_placeholders = ", ".join("?" for _ in fields)
         elif isinstance(connection, mysql.connector.MySQLConnection):
-            value_placeholders = ", ".join("s%" for _ in fields)
+            value_placeholders = ", ".join("%s" for _ in fields)
         return f"INSERT INTO {tabel_name} ({field_names}) VALUES ({value_placeholders})"
 

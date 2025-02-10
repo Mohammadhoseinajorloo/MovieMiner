@@ -40,7 +40,9 @@ class DatabaseManager:
                         password=password,
                         host=host,
                         port=int(port),
-                        database=database
+                        database=database,
+                        charset="utf8mb4",
+                        use_unicode=True,
                     )
             else:
                 logger.error("This status not exist in default project")
