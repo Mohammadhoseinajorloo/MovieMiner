@@ -61,6 +61,16 @@ class DatabaseManager:
 
 
     @log_execution
+    def _isexist(self, tabel_name: str, article: Article):
+        isexist_query = self.querygenerator.isexist_query(self.connection, tabel_name, article)
+        self.cursor.execute(isexist_query)
+        awnser = self.cursor.fetchone()
+        #print(awnser)
+        if awnser is None:
+            return False
+        return True
+
+    @log_execution
     def create_table(self, tabel_name: str, article: Article):
         create_table_query = self.querygenerator.create_table_query(self.connection, tabel_name, article)
         self.cursor.execute(create_table_query)
@@ -68,6 +78,9 @@ class DatabaseManager:
 
     @log_execution
     def insert(self, tabel_name: str, article: Article):
-        insert_query = self.querygenerator.insert_query(self.connection, tabel_name, article)
-        self.cursor.execute(insert_query, article.get_values())
-        self.connection.commit()
+        if not self._isexist(tabel_name, article):
+            insert_query = self.querygenerator.insert_query(self.connection, tabel_name, article)
+            self.cursor.execute(insert_query, article.get_values())
+            self.connection.commit()
+        else:
+            print("this movie exist in database")

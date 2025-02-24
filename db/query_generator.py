@@ -31,3 +31,11 @@ class QueryGenerator:
             value_placeholders = ", ".join("%s" for _ in fields)
         return f"INSERT INTO {tabel_name} ({field_names}) VALUES ({value_placeholders})"
 
+
+    @log_execution
+    def isexist_query(self, connection , tabel_name: str, article: Article):
+        if isinstance(connection, sqlite3.Connection):
+            #print(f"SELECT * FROM {tabel_name} WHERE title={article.filds["title"]}")
+            return f"SELECT * FROM {tabel_name} WHERE title='{article.filds["title"]}'"
+        else:
+            print("this connectio not sqlite3")
