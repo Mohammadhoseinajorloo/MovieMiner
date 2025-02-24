@@ -22,7 +22,7 @@ class DatabaseManager:
             # if project status test connection to sqlite database
             if status == "test":
                 db_address = setting.DATABASE_ADDRESS
-                self.connection = sqlite3.connect(db_address)
+                self.connection = sqlite3.connect(db_address, check_same_thread=False)
 
             # if project status product connection to mysql database
             elif status == "product":
