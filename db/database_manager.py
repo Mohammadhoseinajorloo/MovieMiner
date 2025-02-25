@@ -83,4 +83,4 @@ class DatabaseManager:
             self.cursor.execute(insert_query, article.get_values())
             self.connection.commit()
         else:
-            print("this movie exist in database")
+            logger.warning(f"{article.filds["title"]} movie exist in database")
