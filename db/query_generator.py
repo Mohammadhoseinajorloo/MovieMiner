@@ -18,7 +18,7 @@ class QueryGenerator:
         if isinstance(connection, sqlite3.Connection):
             return f"CREATE TABLE IF NOT EXISTS {tabel_name} (id INTEGER PRIMARY KEY AUTOINCREMENT,{placeholders})"
         elif isinstance(connection, mysql.connector.MySQLConnection):
-            return f"CREATE TABLE IF NOT EXISTS `{tabel_name}` (id INT PRIMARY KEY AUTO_INCREMENT, {placeholders})"
+            return f"CREATE TABLE IF NOT EXISTS {tabel_name} (id INT PRIMARY KEY AUTO_INCREMENT, {placeholders})"
 
 
     @log_execution
@@ -34,8 +34,9 @@ class QueryGenerator:
 
     @log_execution
     def isexist_query(self, connection , tabel_name: str, article: Article):
+        #return f"SELECT * FROM {tabel_name} WHERE title='{article.filds["title"]}'"
         if isinstance(connection, sqlite3.Connection):
             #print(f"SELECT * FROM {tabel_name} WHERE title={article.filds["title"]}")
             return f"SELECT * FROM {tabel_name} WHERE title='{article.filds["title"]}'"
-        else:
-            print("this connectio not sqlite3")
+        elif isinstance(connection, mysql.connector.MySQLConnection):
+            return f"SELECT * FROM {tabel_name} WHERE title='{article.filds["title"]}'"

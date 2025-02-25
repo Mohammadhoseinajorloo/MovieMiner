@@ -48,7 +48,7 @@ class DatabaseManager:
                 logger.error("This status not exist in default project")
 
 
-            self.cursor = self.connection.cursor()
+            self.cursor = self.connection.cursor(buffered=True)
             logger.info(f"{status} database Connection Established!!!")
 
         except mysql.connector.Error as error:
