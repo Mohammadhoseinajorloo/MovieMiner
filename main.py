@@ -1,6 +1,6 @@
 from extraction.film import FilmExtract
 from core.config import setting
-from db.database_manager import DatabaseManager
+from db.action import ActionDB 
 from apscheduler.schedulers.blocking import BlockingScheduler
 import jdatetime
 import sqlite3
@@ -30,8 +30,8 @@ def scraping_website(
 # Function for storaging information in database
 def Storage_info_in_db(
     movies: list,
-    db: DatabaseManager = DatabaseManager(
-        status=setting.STATUS_PROJECT
+    db: ActionDB = ActionDB (
+        status=setting.STATUS_PROJECT,
     ),
 ):
     for movie in movies:
