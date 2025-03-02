@@ -34,6 +34,14 @@ class ActionDB(BaseDB):
 
 
     @log_execution
+    def _update(self, tabel_name:str, article: Article):
+        """ Update row data in database """
+        update_query = self.qg.update_query(self.con, tabel_name, article)
+        self.cur.execute(update_query, article.get_values())
+        self.con.commit()
+
+
+    @log_execution
     def create_table(self, tabel_name: str, article: Article):
         """ Action create table in database """
         create_table_query = self.qg.create_table_query(self.con, tabel_name, article)
@@ -48,4 +56,5 @@ class ActionDB(BaseDB):
             self.cur.execute(insert_query, article.get_values())
             self.con.commit()
         else:
+            self._update(tabel_name, article)
             logger.warning(f"{article.filds["title"]} movie exist in database")

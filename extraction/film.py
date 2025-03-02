@@ -1,3 +1,4 @@
+#BUG:: Fixed a bug where the update date was incorrectly recorded in the stars column of the movie table.
 import sys
 import os
 WORK_DIR = os.getcwd()

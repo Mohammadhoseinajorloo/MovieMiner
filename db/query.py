@@ -13,6 +13,7 @@ class QueryGenerator:
 
     @log_execution
     def create_table_query(self, connection , tabel_name: str, article: Article):
+        """ Generate query for create table in database """
         fields = article.get_filds()
         placeholders = ", ".join(f"`{field}` TEXT" for field in fields)
         if isinstance(connection, sqlite3.Connection):
@@ -23,6 +24,7 @@ class QueryGenerator:
 
     @log_execution
     def insert_query(self, connection , tabel_name: str, article: Article):
+        """ Generate query for insert data in database """
         fields = article.get_filds()
         field_names = ", ".join(f"`{field}`" for field in fields)
         if isinstance(connection, sqlite3.Connection):
@@ -34,9 +36,20 @@ class QueryGenerator:
 
     @log_execution
     def isexist_query(self, connection , tabel_name: str, article: Article):
-        #return f"SELECT * FROM {tabel_name} WHERE title='{article.filds["title"]}'"
+        """ Generate query for check is exists data in database or no!!! """
         if isinstance(connection, sqlite3.Connection):
-            #print(f"SELECT * FROM {tabel_name} WHERE title={article.filds["title"]}")
             return f"SELECT * FROM {tabel_name} WHERE title='{article.filds["title"]}'"
         elif isinstance(connection, mysql.connector.MySQLConnection):
             return f"SELECT * FROM {tabel_name} WHERE title='{article.filds["title"]}'"
+
+
+    @log_execution
+    def update_query(self, connection, tabel_name: str, article: Article):
+        """ Generate query for update row data in database """
+        fields = article.get_filds()
+        if isinstance(connection, sqlite3.Connection):
+            field_names = ", ".join(f"`{field}` = ? " for field in fields)
+            return f"UPDATE {tabel_name} SET {field_names} WHERE title = '{article.filds["title"]}'"
+        elif isinstance(connection, mysql.connector.MySQLConnection):
+            field_names = ", ".join(f"`{field}` = %s " for field in fields)
+            return f"UPDATE {tabel_name} SET {field_names} WHERE title = '{article.filds["title"]}'"
