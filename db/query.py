@@ -3,7 +3,7 @@ import os
 WORK_DIR = os.getcwd()
 sys.path.append(WORK_DIR)
 
-from article import Article
+from extractor.article import Article
 from logger import log_execution
 import sqlite3
 import mysql.connector

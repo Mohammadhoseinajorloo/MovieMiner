@@ -1,4 +1,4 @@
-from extraction.film import FilmExtract
+from extractor import MovieScraper
 from core.config import setting
 from db.action import ActionDB 
 from apscheduler.schedulers.blocking import BlockingScheduler
@@ -17,7 +17,7 @@ def scraping_website(
 
     try:
         logger.info(f"Starting scraping page number {page} process...")
-        moviextraction = FilmExtract(url)
+        moviextraction = MovieScraper(url)
         movies = moviextraction.scrape()
         logger.info(f"Scraped page number {page}")
         return movies
