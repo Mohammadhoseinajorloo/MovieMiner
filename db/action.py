@@ -57,4 +57,4 @@ class ActionDB(BaseDB):
             self.con.commit()
         else:
             self._update(tabel_name, article)
-            logger.warning(f"{article.filds["title"]} movie exist in database")
+            logger.warning(f"{article.filds['title']} movie exist in database")

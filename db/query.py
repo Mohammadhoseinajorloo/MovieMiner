@@ -38,9 +38,9 @@ class QueryGenerator:
     def isexist_query(self, connection , tabel_name: str, article: Article):
         """ Generate query for check is exists data in database or no!!! """
         if isinstance(connection, sqlite3.Connection):
-            return f"SELECT * FROM {tabel_name} WHERE title='{article.filds["title"]}'"
+            return f"SELECT * FROM {tabel_name} WHERE title='{article.filds['title']}'"
         elif isinstance(connection, mysql.connector.MySQLConnection):
-            return f"SELECT * FROM {tabel_name} WHERE title='{article.filds["title"]}'"
+            return f"SELECT * FROM {tabel_name} WHERE title='{article.filds['title']}'"
 
 
     @log_execution
@@ -49,7 +49,7 @@ class QueryGenerator:
         fields = article.get_filds()
         if isinstance(connection, sqlite3.Connection):
             field_names = ", ".join(f"`{field}` = ? " for field in fields)
-            return f"UPDATE {tabel_name} SET {field_names} WHERE title = '{article.filds["title"]}'"
+            return f"UPDATE {tabel_name} SET {field_names} WHERE title = '{article.filds['title']}'"
         elif isinstance(connection, mysql.connector.MySQLConnection):
             field_names = ", ".join(f"`{field}` = %s " for field in fields)
-            return f"UPDATE {tabel_name} SET {field_names} WHERE title = '{article.filds["title"]}'"
+            return f"UPDATE {tabel_name} SET {field_names} WHERE title = '{article.filds['title']}'"
