@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-from logger import log_execution
 import requests
 
 
@@ -13,7 +12,6 @@ class RequestHandler:
     def __init__(self):
         self.session = requests.Session()
 
-    @log_execution
     def fetch_page(self, url: str) -> BeautifulSoup:
         """Fetches and parses HTML content from the given URL."""
         try:

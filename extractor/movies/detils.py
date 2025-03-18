@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-from logger import log_execution
 from core.config import setting
 from ..article import Article
 from ..updatetime import UpdateTime
@@ -10,19 +9,16 @@ class MovieDetailsExtractor:
     """Extracts movie details from a BeautifulSoup object."""
 
     @staticmethod
-    @log_execution
     def extract_page_link(soup: BeautifulSoup) -> str:
         return soup.select_one("div.titr h2.title a")["href"]
 
 
     @staticmethod
-    @log_execution
     def extract_image(soup: BeautifulSoup) -> str:
         return soup.select_one("a.photo img.owl-lazy")["data-src"]
 
 
     @staticmethod
-    @log_execution
     def extract_title(soup: BeautifulSoup) -> str:
         raw_title = soup.select_one("div.titr h2.title").text
         title_parts = raw_title.split(" ")[2:]
@@ -30,7 +26,6 @@ class MovieDetailsExtractor:
 
 
     @staticmethod
-    @log_execution
     def extract_rates(soup: BeautifulSoup) -> tuple:
         """Extracts IMDb rating, vote count, user satisfaction, and Metacritic score."""
         try:
@@ -61,7 +56,6 @@ class MovieDetailsExtractor:
 
 
     @staticmethod
-    @log_execution
     def extract_movie_details(soup: BeautifulSoup) -> dict:
         details = {}
         info_blocks = soup.select("ul.info li.rt")
@@ -74,7 +68,6 @@ class MovieDetailsExtractor:
 
 
     @staticmethod
-    @log_execution
     def extract_update_time(soup: BeautifulSoup) -> str:
         """Extracts the last update time of the movie."""
         try:
@@ -86,7 +79,6 @@ class MovieDetailsExtractor:
 
 
     @staticmethod
-    @log_execution
     def extract_description(soup: BeautifulSoup) -> str:
         """Extracts the movie description."""
         try:
@@ -96,7 +88,6 @@ class MovieDetailsExtractor:
 
 
     @staticmethod
-    @log_execution
     def extract_like(soup: BeautifulSoup) -> int:
         """Extracts the number of likes."""
         try:
@@ -106,7 +97,6 @@ class MovieDetailsExtractor:
 
 
     @staticmethod
-    @log_execution
     def extract_dislike(soup: BeautifulSoup) -> int:
         """Extracts the number of dislikes."""
         try:

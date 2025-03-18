@@ -4,8 +4,6 @@ WORK_DIR = os.getcwd()
 sys.path.append(WORK_DIR)
 
 from core.config import setting
-from logger import log_execution
-from logger import logger
 import sqlite3
 import mysql.connector
 
@@ -14,7 +12,6 @@ class DBConnection:
     _instance = None # Singleton instance 
     db_address = setting.DATABASE_ADDRESS 
 
-    @log_execution
     def __new__(cls, mode="Testing"):
         """Create a singleton database connection instance base on mode"""
         if cls._instance is None:
@@ -51,7 +48,6 @@ class DBConnection:
         return cls._instance
 
 
-    @log_execution
     def return_info_from_address(db_address):
         db_info = db_address.split('://')[1].split('@')
         user_pass = db_info[0].split(':')
@@ -64,7 +60,6 @@ class DBConnection:
         return user, password, host, port, database
 
 
-    @log_execution
     def __exit__(self):
         """ Exit database after end work with database """
         if self.connection:
