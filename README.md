@@ -37,10 +37,9 @@ DATABASE_ADDRESS = "sqlite:///./db_name.db"
 
 
 ## TODO
-- [ ] add watch and watchn't movies in database for analisis movies data for recommender to user.
-- [X] add limit for imdb rate in extracted.
-- [X] add logger
-  - [X] add logger in main file
-  - [X] add logger in db
-  - [X] add logger in extraction data
-- [X] add scheduler for app
+**Database**
+- [X] Impliment Singleton Desain Pattern
+
+**Logger**
+- [ ] Impliment Singleton Desain pattern
+

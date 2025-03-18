@@ -8,6 +8,7 @@ from logger import (
     logger,
 )
 
+#BUG: Not run app after connected to database !!!!!
 
 # Function for scraping website
 def scraping_website(
@@ -31,7 +32,7 @@ def scraping_website(
 def Storage_info_in_db(
     movies: list,
     db: ActionDB = ActionDB (
-        status=setting.STATUS_PROJECT,
+        mode =setting.STATUS_PROJECT,
     ),
 ):
     for movie in movies:
