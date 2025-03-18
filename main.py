@@ -8,7 +8,6 @@ from logger import (
     logger,
 )
 
-#BUG: Not run app after connected to database !!!!!
 
 # Function for scraping website
 def scraping_website(
@@ -81,7 +80,7 @@ def main(schedule: bool=False):
 
 
 if __name__ == "__main__":
-    if setting.STATUS_PROJECT == "product":
+    if setting.STATUS_PROJECT == "Production":
         main(schedule=True) # with schedule
-    elif setting.STATUS_PROJECT == "test":
+    elif setting.STATUS_PROJECT == "Testing":
         main() # without schedule
