@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from core.config import setting
+from logger import LoggerDecorators
 from ..article import Article
 from ..updatetime import UpdateTime
 import jdatetime
@@ -8,16 +9,19 @@ import jdatetime
 class MovieDetailsExtractor:
     """Extracts movie details from a BeautifulSoup object."""
 
+    @LoggerDecorators.log_to_file
     @staticmethod
     def extract_page_link(soup: BeautifulSoup) -> str:
         return soup.select_one("div.titr h2.title a")["href"]
 
 
+    @LoggerDecorators.log_to_file
     @staticmethod
     def extract_image(soup: BeautifulSoup) -> str:
         return soup.select_one("a.photo img.owl-lazy")["data-src"]
 
 
+    @LoggerDecorators.log_to_file
     @staticmethod
     def extract_title(soup: BeautifulSoup) -> str:
         raw_title = soup.select_one("div.titr h2.title").text
@@ -25,6 +29,7 @@ class MovieDetailsExtractor:
         return " ".join([word for word in title_parts if not word.isdigit()])
 
 
+    @LoggerDecorators.log_to_file
     @staticmethod
     def extract_rates(soup: BeautifulSoup) -> tuple:
         """Extracts IMDb rating, vote count, user satisfaction, and Metacritic score."""
@@ -55,6 +60,7 @@ class MovieDetailsExtractor:
         return imdb, vote, user_satisfaction, metacritic
 
 
+    @LoggerDecorators.log_to_file
     @staticmethod
     def extract_movie_details(soup: BeautifulSoup) -> dict:
         details = {}
@@ -67,6 +73,7 @@ class MovieDetailsExtractor:
         return details
 
 
+    @LoggerDecorators.log_to_file
     @staticmethod
     def extract_update_time(soup: BeautifulSoup) -> str:
         """Extracts the last update time of the movie."""
@@ -78,6 +85,7 @@ class MovieDetailsExtractor:
             return None
 
 
+    @LoggerDecorators.log_to_file
     @staticmethod
     def extract_description(soup: BeautifulSoup) -> str:
         """Extracts the movie description."""
@@ -87,6 +95,7 @@ class MovieDetailsExtractor:
             return "No description available."
 
 
+    @LoggerDecorators.log_to_file
     @staticmethod
     def extract_like(soup: BeautifulSoup) -> int:
         """Extracts the number of likes."""
@@ -96,6 +105,7 @@ class MovieDetailsExtractor:
             return 0
 
 
+    @LoggerDecorators.log_to_file
     @staticmethod
     def extract_dislike(soup: BeautifulSoup) -> int:
         """Extracts the number of dislikes."""

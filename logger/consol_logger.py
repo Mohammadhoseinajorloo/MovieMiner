@@ -13,3 +13,6 @@ class ConsolLogger(BaseLogger):
             console_handler.setLevel(log_level)
             self.logger.addHandler(console_handler)
             self.initialized = True  # Mark as initialized
+
+
+consol_logger = ConsolLogger().get_logger()

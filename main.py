@@ -2,16 +2,13 @@ from extractor import MovieScraper
 from core.config import setting
 from db.action import ActionDB 
 from apscheduler.schedulers.blocking import BlockingScheduler
-from logger import LoggerDecorators, FileLogger, ConsolLogger
+from logger import LoggerDecorators, file_logger, consol_logger
 import jdatetime
 import sqlite3
 
 
-file_logger = FileLogger().get_logger()
-consol_logger = ConsolLogger().get_logger()
-
 # Function for scraping website
-@LoggerDecorators.log_to_consol
+@LoggerDecorators.log_to_file
 def scraping_website(
         page: int
 ):
@@ -25,12 +22,13 @@ def scraping_website(
         return movies
 
     except Exception as e:
+        consol_logger.error(f"Error while scraping page {page}: {e}")
         file_logger.error(f"Error while scraping page {page}: {e}")
         raise
 
 
 # Function for storaging information in database
-@LoggerDecorators.log_to_consol
+@LoggerDecorators.log_to_file
 def Storage_info_in_db(
     movies: list,
     db: ActionDB = ActionDB (
@@ -43,12 +41,13 @@ def Storage_info_in_db(
             db.insert("films", movie)
             consol_logger.info(f"Saveing {movie.filds['title']} movie in db")
         except Exception as e :
+            consol_logger.error(f"Database error on  movie {movie.filds['title']} : {e}")
             file_logger.error(f"Database error on  movie {movie.filds['title']} : {e}")
             continue
 
 
 # Starting scheduler for run all app
-@LoggerDecorators.log_to_consol
+@LoggerDecorators.log_to_file
 def start_scheduler(
         h_schedule: int,
         m_schedule: int
@@ -60,17 +59,18 @@ def start_scheduler(
         scheduler.start()
     except (KeyboardInterrupt, SystemExit):
         file_logger.error("End ...")
+        consol_logger.error("End ...")
 
 
-@LoggerDecorators.log_to_consol
+@LoggerDecorators.log_to_file
 def main(schedule: bool=False):
     # This condition for test in docker
     if schedule:
-        print('With schedule')
+        consol_logger.info('With schedule')
         start_scheduler(int(setting.HOUR_SCHEDUL), int(setting.MINUTE_SCHEDUL))
 
     else:
-        print("Without schedule")
+        consol_logger.info("Without schedule")
         page = 1
         while True:
             # scrap website

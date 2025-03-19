@@ -4,6 +4,7 @@ WORK_DIR = os.getcwd()
 sys.path.append(WORK_DIR)
 
 from core.config import setting
+from logger import LoggerDecorators, consol_logger
 import sqlite3
 import mysql.connector
 
@@ -12,6 +13,7 @@ class DBConnection:
     _instance = None # Singleton instance 
     db_address = setting.DATABASE_ADDRESS 
 
+    @LoggerDecorators.log_to_file
     def __new__(cls, mode="Testing"):
         """Create a singleton database connection instance base on mode"""
         if cls._instance is None:
@@ -23,7 +25,7 @@ class DBConnection:
                 db_address = setting.DATABASE_ADDRESS
                 cls._instance.connection = sqlite3.connect(db_address, check_same_thread=False)
                 cls._instance.cursor = cls._instance.connection.cursor()
-                print("Connected to SQLite (Test Mode)")
+                consol_logger.info("Connected to SQLite (Test Mode)")
 
             # if project status product connection to mysql database
             elif mode == "Production":
@@ -38,16 +40,18 @@ class DBConnection:
                     use_unicode=True,
                 )
                 cls._instance.cursor = cls._instance.connection.cursor(buffered=True)
-                print("Conneced to MySQL (Production Mode)")
+                consol_logger.info("Conneced to MySQL (Production Mode)")
 
             # if not test or product mode return error log in log file
             else:
-                logger.error("Invalid mode! Choose either 'Testing' or 'Production")
+                consol_logger.error("Invalid mode! Choose either 'Testing' or 'Production")
+                file_logger.error("Invalid mode! Choose either 'Testing' or 'Production")
                 raise ValueError("Invalid mode!")
 
         return cls._instance
 
 
+    @LoggerDecorators.log_to_file
     def return_info_from_address(db_address):
         db_info = db_address.split('://')[1].split('@')
         user_pass = db_info[0].split(':')
@@ -60,9 +64,10 @@ class DBConnection:
         return user, password, host, port, database
 
 
+    @LoggerDecorators.log_to_file
     def __exit__(self):
         """ Exit database after end work with database """
         if self.connection:
             self.connection.close()
             DBConnection._instance = None
-            print("Database connection closed.")
+            consol_logger.info("Database connection closed.")

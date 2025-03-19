@@ -2,6 +2,7 @@ from ..httprequest import RequestHandler
 from ..article import Article
 from .detils import MovieDetailsExtractor
 from core.config import setting
+from logger import LoggerDecorators
 import datetime
 import jdatetime
 
@@ -9,10 +10,13 @@ import jdatetime
 class MovieScraper:
     """Main class to handle movie extraction process."""
 
+    @LoggerDecorators.log_to_file
     def __init__(self, url):
         self.url = url
         self.request_handler = RequestHandler()
 
+
+    @LoggerDecorators.log_to_file
     def scrape(self):
         soup = self.request_handler.fetch_page(self.url)
         if not soup:
@@ -30,8 +34,8 @@ class MovieScraper:
             updatetime = MovieDetailsExtractor.extract_update_time(article)
             imdb_rate, vote_rate, user_satisfaction_rate, metacritic_rate = MovieDetailsExtractor.extract_rates(article)
 
-            #if shamsi_day == int(updatetime.day) and imdb_rate >= int(setting.RATE_CONDITION):
-            if shamsi_day - 1 == int(updatetime.day):# and imdb_rate >= int(setting.RATE_CONDITION):
+            if shamsi_day == int(updatetime.day) and imdb_rate >= int(setting.RATE_CONDITION):
+            #if shamsi_day - 1 == int(updatetime.day):# and imdb_rate >= int(setting.RATE_CONDITION):
                 movie = Article(
                     page_link=MovieDetailsExtractor.extract_page_link(article),
                     title=MovieDetailsExtractor.extract_title(article),

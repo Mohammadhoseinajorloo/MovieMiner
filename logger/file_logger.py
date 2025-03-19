@@ -19,6 +19,7 @@ class FileLogger(BaseLogger):
             self.initialized = True
 
 
+file_logger = FileLogger().get_logger()
 '''
 LOGGING_FORMAT = '[%(levelname)s] %(asctime)s - (%(name)s/%(filename)s/%(funcName)s/%(lineno)d) - %(message)s'
 LOGGING_TIME_FORMAT = '%Y-%m-%d %H:%M:%S'

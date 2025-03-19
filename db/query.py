@@ -4,12 +4,14 @@ WORK_DIR = os.getcwd()
 sys.path.append(WORK_DIR)
 
 from extractor.article import Article
+from logger import LoggerDecorators
 import sqlite3
 import mysql.connector
 
 
 class QueryGenerator:
 
+    @LoggerDecorators.log_to_file
     def create_table_query(self, connection , tabel_name: str, article: Article):
         """ Generate query for create table in database """
         fields = article.get_filds()
@@ -20,6 +22,7 @@ class QueryGenerator:
             return f"CREATE TABLE IF NOT EXISTS {tabel_name} (id INT PRIMARY KEY AUTO_INCREMENT, {placeholders})"
 
 
+    @LoggerDecorators.log_to_file
     def insert_query(self, connection , tabel_name: str, article: Article):
         """ Generate query for insert data in database """
         fields = article.get_filds()
@@ -31,6 +34,7 @@ class QueryGenerator:
         return f"INSERT INTO {tabel_name} ({field_names}) VALUES ({value_placeholders})"
 
 
+    @LoggerDecorators.log_to_file
     def isexist_query(self, connection , tabel_name: str, article: Article):
         """ Generate query for check is exists data in database or no!!! """
         if isinstance(connection, sqlite3.Connection):
@@ -39,6 +43,7 @@ class QueryGenerator:
             return f"SELECT * FROM {tabel_name} WHERE title='{article.filds['title']}'"
 
 
+    @LoggerDecorators.log_to_file
     def update_query(self, connection, tabel_name: str, article: Article):
         """ Generate query for update row data in database """
         fields = article.get_filds()
