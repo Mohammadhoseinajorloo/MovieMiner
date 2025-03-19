@@ -30,6 +30,6 @@ class BaseLogger(metaclass=SingletonMeta):
         """Serialize logger configurtion to JSON"""
         return json.dumps({
             "name": self.logger.name,
-            "level": logging.gerLevelName(self.logger.level),
+            "level": logging.getLevelName(self.logger.level),
             "handlers": [handler.__class__.__name__ for handler in self.logger.handlers ]
         }, indent=4)
