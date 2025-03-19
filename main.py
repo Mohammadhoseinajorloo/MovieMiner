@@ -2,32 +2,35 @@ from extractor import MovieScraper
 from core.config import setting
 from db.action import ActionDB 
 from apscheduler.schedulers.blocking import BlockingScheduler
+from logger import LoggerDecorators, FileLogger, ConsolLogger
 import jdatetime
 import sqlite3
-from logger import (
-    logger,
-)
 
+
+file_logger = FileLogger().get_logger()
+consol_logger = ConsolLogger().get_logger()
 
 # Function for scraping website
+@LoggerDecorators.log_to_consol
 def scraping_website(
         page: int
 ):
     url = f"{setting.FILM_URL}/page/{str(page)}/"
 
     try:
-        logger.info(f"Starting scraping page number {page} process...")
+        consol_logger.info(f"Starting scraping page number {page} process...")
         moviextraction = MovieScraper(url)
         movies = moviextraction.scrape()
-        logger.info(f"Scraped page number {page}")
+        consol_logger.info(f"Scraped page number {page}")
         return movies
 
     except Exception as e:
-        logger.error(f"Error while scraping page {page}: {e}")
+        file_logger.error(f"Error while scraping page {page}: {e}")
         raise
 
 
 # Function for storaging information in database
+@LoggerDecorators.log_to_consol
 def Storage_info_in_db(
     movies: list,
     db: ActionDB = ActionDB (
@@ -38,13 +41,14 @@ def Storage_info_in_db(
         try:
             db.create_table("films", movie)
             db.insert("films", movie)
-            logger.info(f"Saveing {movie.filds['title']} movie in db")
+            consol_logger.info(f"Saveing {movie.filds['title']} movie in db")
         except Exception as e :
-            logger.error(f"Database error on  movie {movie.filds['title']} : {e}")
+            file_logger.error(f"Database error on  movie {movie.filds['title']} : {e}")
             continue
 
 
 # Starting scheduler for run all app
+@LoggerDecorators.log_to_consol
 def start_scheduler(
         h_schedule: int,
         m_schedule: int
@@ -52,12 +56,13 @@ def start_scheduler(
     scheduler = BlockingScheduler()
     scheduler.add_job(main, "cron", hour=h_schedule, minute=m_schedule)
     try:
-        logger.info("Starting scheduler ....")
+        consol_logger.info("Starting scheduler ....")
         scheduler.start()
     except (KeyboardInterrupt, SystemExit):
-        logger.error("End ...")
+        file_logger.error("End ...")
 
 
+@LoggerDecorators.log_to_consol
 def main(schedule: bool=False):
     # This condition for test in docker
     if schedule:
@@ -72,7 +77,8 @@ def main(schedule: bool=False):
             movies = scraping_website(page)
             # if empty movies list break app
             if not movies:
-                logger.warning(f"There is no movie for today")
+                consol_logger.warning(f"There is no movie for today")
+                file_logger.warning(f"There is no movie for today")
                 break
             # strorge moive information in database
             Storage_info_in_db(movies)
