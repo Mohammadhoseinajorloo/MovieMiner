@@ -5,9 +5,13 @@ charset-normalizer==3.4.0
 idna==3.10
 jalali_core==1.0.0
 jdatetime==5.0.0
+markdown-it-py==3.0.0
+mdurl==0.1.2
 mysql-connector==2.2.9
+Pygments==2.19.1
 python-dotenv==1.0.1
 requests==2.32.3
+rich==13.9.4
 soupsieve==2.6
 tzlocal==5.2
 urllib3==2.2.3
