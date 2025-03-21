@@ -1,30 +1,36 @@
+from abc import ABC, abstractmethod
 from extractor import MovieScraper
 from core.config import setting
-from db.action import ActionDB 
+from db.action import ActionDB
 from apscheduler.schedulers.blocking import BlockingScheduler
 from logger import LoggerDecorators, file_logger, consol_logger
 import jdatetime
 import sqlite3
 
 
-# Function for scraping website
-@LoggerDecorators.log_to_file
-def scraping_website(
-        page: int
-):
-    url = f"{setting.FILM_URL}/page/{str(page)}/"
+# Abstract Scraper Strategy
+class ScraperStrategy(ABC):
+    @abstractmethod
+    def scrap(self, page:int):
+        pass
 
-    try:
-        consol_logger.info(f"Starting scraping page number {page} process...")
-        moviextraction = MovieScraper(url)
-        movies = moviextraction.scrape()
-        consol_logger.info(f"Scraped page number {page}")
-        return movies
 
-    except Exception as e:
-        consol_logger.error(f"Error while scraping page {page}: {e}")
-        file_logger.error(f"Error while scraping page {page}: {e}")
-        raise
+# Concrete Scraper
+class MovieScraperStrategy(ScraperStrategy):
+
+    def scrap(self, page:int):
+        url = f"{setting.FILM_URL}/page/{str(page)}/"
+
+        while True:
+            try:
+                consol_logger.info(f"Starting page {page}")
+                scraper = MovieScraper(url)
+                movies = scraper.scrape()
+                consol_logger.info(f"Successfully scraped page {page}.")
+                return movies
+            except Exception as e:
+                consol_logger.error(f"Error while scraping page {page}: {e}")
+                return []
 
 
 # Function for storaging information in database
@@ -42,7 +48,6 @@ def Storage_info_in_db(
             consol_logger.info(f"Saveing {movie.filds['title']} movie in db")
         except Exception as e :
             consol_logger.error(f"Database error on  movie {movie.filds['title']} : {e}")
-            file_logger.error(f"Database error on  movie {movie.filds['title']} : {e}")
             continue
 
 
@@ -58,7 +63,6 @@ def start_scheduler(
         consol_logger.info("Starting scheduler ....")
         scheduler.start()
     except (KeyboardInterrupt, SystemExit):
-        file_logger.error("End ...")
         consol_logger.error("End ...")
 
 
@@ -74,11 +78,11 @@ def main(schedule: bool=False):
         page = 1
         while True:
             # scrap website
-            movies = scraping_website(page)
+            scraper = MovieScraperStrategy()
+            movies = scraper.scrap(page)
             # if empty movies list break app
             if not movies:
                 consol_logger.warning(f"There is no movie for today")
-                file_logger.warning(f"There is no movie for today")
                 break
             # strorge moive information in database
             Storage_info_in_db(movies)
