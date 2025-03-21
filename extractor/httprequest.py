@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from logger import LoggerDecorators
+from logger import LoggerDecorators, consol_logger
 import requests
 
 
@@ -14,7 +14,6 @@ class RequestHandler:
     def __init__(self):
         self.session = requests.Session()
 
-
     @LoggerDecorators.log_to_file
     def fetch_page(self, url: str) -> BeautifulSoup:
         """Fetches and parses HTML content from the given URL."""
@@ -23,5 +22,5 @@ class RequestHandler:
             response.raise_for_status()
             return BeautifulSoup(response.text, "html.parser")
         except requests.RequestException as e:
-            print(f"Request failed: {e}")
+            consol_logger.error(f"Request failed: {e}")
             return None
