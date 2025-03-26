@@ -34,8 +34,8 @@ class MovieScraper:
             updatetime = MovieDetailsExtractor.extract_update_time(article)
             imdb_rate, vote_rate, user_satisfaction_rate, metacritic_rate = MovieDetailsExtractor.extract_rates(article)
 
-            if shamsi_day == int(updatetime.day) and imdb_rate >= int(setting.RATE_CONDITION):
-            #if shamsi_day - 1 == int(updatetime.day):# and imdb_rate >= int(setting.RATE_CONDITION):
+            #if shamsi_day == int(updatetime.day) and imdb_rate >= int(setting.RATE_CONDITION):
+            if shamsi_day - 1 == int(updatetime.day) and imdb_rate >= int(setting.RATE_CONDITION):
                 movie = Article(
                     page_link=MovieDetailsExtractor.extract_page_link(article),
                     title=MovieDetailsExtractor.extract_title(article),
