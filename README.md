@@ -39,7 +39,9 @@ DATABASE_ADDRESS = "sqlite:///./db_name.db"
 ## TODO
 **Database**
 - [X] Impliment Singleton Desain Pattern
-
 **Logger**
 - [ ] Impliment Singleton Desain pattern
-
+**App**
+- [ ] Debug run sceduler in production app
+**Release**
+- [ ] Create CI/CD on master branch for best practice release
