@@ -41,6 +41,7 @@ DATABASE_ADDRESS = "sqlite:///./db_name.db"
 - [X] Impliment Singleton Desain Pattern
 **Logger**
 - [ ] Impliment Singleton Desain pattern
+- [ ] Debug logger in production mode
 **App**
 - [ ] Debug run sceduler in production app
 **Release**
