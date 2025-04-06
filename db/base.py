@@ -45,8 +45,6 @@ class DBConnection:
             # if not test or product mode return error log in log file
             else:
                 consol_logger.error("Invalid mode! Choose either 'Testing' or 'Production")
-                file_logger.error("Invalid mode! Choose either 'Testing' or 'Production")
-                raise ValueError("Invalid mode!")
 
         return cls._instance
 

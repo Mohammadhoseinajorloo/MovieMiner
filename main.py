@@ -51,30 +51,8 @@ def Storage_info_in_db(
             continue
 
 
-# Starting scheduler for run all app
-@LoggerDecorators.log_to_file
-def start_scheduler(
-        h_schedule: int,
-        m_schedule: int
-):
-    scheduler = BlockingScheduler()
-    scheduler.add_job(main, "cron", hour=h_schedule, minute=m_schedule)
-    try:
-        consol_logger.info("Starting scheduler ....")
-        scheduler.start()
-    except (KeyboardInterrupt, SystemExit):
-        consol_logger.error("End ...")
-
-
-@LoggerDecorators.log_to_file
-def main(schedule: bool=False):
-    # This condition for test in docker
-    if schedule:
-        consol_logger.info('With schedule')
-        start_scheduler(int(setting.HOUR_SCHEDUL), int(setting.MINUTE_SCHEDUL))
-
-    else:
-        consol_logger.info("Without schedule")
+class App:
+    def run(self):
         page = 1
         while True:
             # scrap website
@@ -88,9 +66,25 @@ def main(schedule: bool=False):
             Storage_info_in_db(movies)
             page += 1
 
+    def run_testing_mode(self):
+        consol_logger.info("Run app in testing mode")
+        self.run()
+
+    def run_production_mode(self):
+        consol_logger.info("Run app in production mode")
+        scheduler = BlockingScheduler()
+        scheduler.add_job(self.run, "cron", hour=setting.HOUR_SCHEDUL, minute=setting.MINUTE_SCHEDUL)
+        try:
+            consol_logger.info("Starting scheduler ....")
+            scheduler.start()
+        except (KeyboardInterrupt, SystemExit):
+            consol_logger.error("End ...")
+
 
 if __name__ == "__main__":
+    app = App()
     if setting.STATUS_PROJECT == "Production":
-        main(schedule=True) # with schedule
+        app.run_production_mode()
+
     elif setting.STATUS_PROJECT == "Testing":
-        main() # without schedule
+        app.run_testing_mode()
