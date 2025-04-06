@@ -1,6 +1,10 @@
+# ignore all folder in project
 .venv/
 __pycache__/
-downloader.db
+
+# ignore all file in project
 .env
+
+# ignore group file in project
+*.db
 *.log
-get-docker.sh
