@@ -3,6 +3,7 @@ services:
   scraper:
     build: .
     container_name: downloader
+    restart: always
     depends_on:
       db:
         condition: service_healthy
