@@ -1,0 +1,19 @@
+name: Test SSH connection
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test_ssh:
+    runs_on: ubuntu-latest
+
+    steps:
+    - name: connecte to server and say hi
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ sectets.SSH_HOST }}
+        username: ${{ sectets.SSH_USER }}
+        key: ${{ sectets.SSH_KEY }}
+        script: |
+            echo "connect ssh with your server ✅"
+            uname -a
